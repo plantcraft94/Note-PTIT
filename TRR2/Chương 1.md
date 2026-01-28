@@ -67,3 +67,8 @@ các đỉnh còn lại của đồ thị thì ta kết luận đƣợc đồ th
 ### Định nghĩa 3. Cạnh e thuộc E đƣợc gọi là cầu nếu loại bỏ e làm tăng thành phần liên
 thông của đồ thị. Đỉnh uV đƣợc gọi là đỉnh trụ nếu loại bỏ u cùng với các cạnh nối với
 u làm tăng thành phần liên thông của đồ thị.
+## Đồ thị vòng:
+Đồ thị được nối thành hình tròn
+## Đồ thị bánh xe:
+Đồ thị được nối tất cả các đỉnh với nhau
+## Đồ thị 2 phía

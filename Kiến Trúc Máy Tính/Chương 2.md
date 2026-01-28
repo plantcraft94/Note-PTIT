@@ -46,3 +46,58 @@ Y, Z: Temporary Register
 - Full duplex (2-ways communicate)
 - 
 # 7. Example
+
+---
+# Giới thiệu về CPU pipeline
+
+| IF  | ID  | EX  | MEM | WB  |
+| --- | --- | --- | --- | --- |
+Cải thiện hiệu năng bằng cách tăng số lượng lện vào xử lí
+
+| IF  | ID  | EX  | MEM | WB  |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ->  | IF  | ID  | EX  | MEM | WB  |     |     |     |
+| ->  |     | IF  | ID  | EX  | MEM | WB  |     |     |
+| ->  |     |     | IF  | ID  | EX  | MEM | WB  |     |
+| ->  |     |     |     | IF  | ID  | EX  | MEM | WB  |
+Nhận xét: chia thực hiện lệnh thành 5 bước -> Hiệu quả theo Pipeline hơn tương đương 5 lần
+
+=> Pipeline là kĩ thuật song song ở mức lện để tăng tốc độ tính toán
+## Vấn đề xảy ra:
+- xung đột tài nguyên (resource conflict)
+	- Xung đột truy cập bộ nhớ
+	- xung đột truy cập thanh ghi
+	- Giải pháp:
+		- Nâng cao khả năng tài nguyên
+		- Memory/cache: hỗ trợ nhiều thao tác đọc/ ghi cùng lúc
+		- Chia memory thành cache lệnh và cache dữ liệu để cải thiện truy nhập
+- Xung đột / tranh chấp dữ liệu (data hazard)
+	- Hầu hết là RAW hay Read After Write Hazard
+	- Giải pháp:
+		- Ngưng Pipeline (Stall): phải làm trễ hoặc nhưng pipeline bằng cách sử dụng 1 vài phương pháp tới khi có dữ liệu chính xác
+		- Chèn NO-OP
+		- Chèn các lệnh độc lập dữ liệu vào giữa các lệnh cần dữ liệu
+			- Ví dụ:
+			- 
+- Các lệnh rẽ nhánh ()
+Ví dụ:
+ADD R1, R1, R3                        R1 <- R1+R3
+SUB 
+
+| IF  | ID  | EX    | MEM   | WB    |     |     |     |     |
+| --- | --- | ----- | ----- | ----- | --- | --- | --- | --- |
+| ->  | IF  | STALL | STALL | STALL | ID  | EX  | MEM | WB  |
+
+
+
+NO-OP
+
+| IF  | ID    | EX    | MEM   | WB    |       |       |       |     |
+| --- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | --- |
+| ->  | NO-OP | NO-OP | NO-OP | NO-OP | NO-OP |       |       |     |
+| ->  |       | NO-OP | NO-OP | NO-OP | NO-OP | NO-OP |       |     |
+| ->  |       |       | NO-OP | NO-OP | NO-OP | NO-OP | NO-OP |     |
+| ->  |       |       |       | IF    | ID    | EX    | MEM   | WB  |
+Chèn các lệnh độc lập dữ liệu vào giữ ADD và SUB
+
+![[Pasted image 20260128082049.png]]
